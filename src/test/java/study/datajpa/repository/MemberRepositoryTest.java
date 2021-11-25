@@ -11,6 +11,7 @@ import study.datajpa.entity.Team;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -152,10 +153,32 @@ class MemberRepositoryTest {
         List<Member> result = memberRepository.findByNames(Arrays.asList("AAA", "BBB"));
         for (Member member : result) {
             System.out.println("member = " + member);
-            
         }
     }
 
+    @Test
+    public void returnType(){
+        Member m1 = new Member("AAA", 10);
+        Member m2 = new Member("BBB", 20);
+        memberRepository.save(m1);
+        memberRepository.save(m2);
 
+        /*List<Member> findMember = memberRepository.findListByUsername("AAA");
+        System.out.println("findMember = " + findMember);*/
+
+        /*Optional<Member> findMember = memberRepository.findOptionalByUsername("AAA");
+        System.out.println("findMember = " + findMember);*/
+
+        /*List<Member> result = memberRepository.findListByUsername("asdfasdf");
+        System.out.println("findMember = " + result.size());//size = 0, null은 아님*/
+
+        /*Member findMember = memberRepository.findMemberByUsername("asdfasfd");
+        System.out.println("findMember = " + findMember);//null*/
+
+        /*Optional<Member> findMember = memberRepository.findOptionalByUsername("asdfasfd");
+        System.out.println("findMember = " + findMember);//findMember = Optional.empty
+        //단건조회(Optional뿐 아니라)에 데이터가 1개 이상일 경우 Exception 발생(IncorrectResultSizeDataAccessException)*/
+
+    }
 
 }
