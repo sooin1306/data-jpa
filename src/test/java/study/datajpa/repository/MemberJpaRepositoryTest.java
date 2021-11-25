@@ -1,6 +1,7 @@
 package study.datajpa.repository;
 
 import org.assertj.core.api.Assertions;
+import org.h2.util.ThreadDeadlockDetector;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -91,4 +92,34 @@ class MemberJpaRepositoryTest {
 
     }
 
+    @Test
+    public void pageing() {
+        //given
+        memberJpaRepository.save(new Member("member1",10));
+        memberJpaRepository.save(new Member("member2",10));
+        memberJpaRepository.save(new Member("member3",10));
+        memberJpaRepository.save(new Member("member4",10));
+        memberJpaRepository.save(new Member("member5",10));
+
+        int age = 10;
+        int offset = 0;
+        int limit = 3;
+
+        //when
+        List<Member> members = memberJpaRepository.findByPage(age, offset, limit);
+        long totalCount = memberJpaRepository.totalCount(age);
+
+        // 페이지 계산 공식 적용...
+        // totalPage = totalCount/size...
+        // 마직막 페이지 ...
+        // 최초 페이지 ...
+
+
+        //then
+        assertThat(members.size()).isEqualTo(3);//0~2 (member3~member5)
+        for (Member member : members) {
+            System.out.println("member = " + member);
+        }
+        assertThat(totalCount).isEqualTo(5);
+    }
 }
