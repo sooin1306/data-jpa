@@ -83,4 +83,5 @@ public interface MemberRepository extends JpaRepository<Member,Long> {
     member member0_
     where
     member0_.username=? for update*/
+
 }
