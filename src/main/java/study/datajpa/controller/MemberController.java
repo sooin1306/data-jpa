@@ -34,9 +34,12 @@ public class MemberController {
 
     @GetMapping("/members")
     public Page<MemberDto> list (@PageableDefault(size = 5) Pageable pageable) {
-        return memberRepository.findAll(pageable)
+        PageRequest request = PageRequest.of(1, 2);
+
+        Page<MemberDto> map = memberRepository.findAll(pageable)
                 .<MemberDto>map(MemberDto::new);
-        //return memberRepository.findAll(pageable); //인라인 방법
+
+        return map;
     }
 
     @PostConstruct
